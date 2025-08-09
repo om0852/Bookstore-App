@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 const router = express.Router();
 
 const generateToken = (userId) => {
-  jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "15d" });
+ return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "15d" });
 };
 
 router.post("/register", async (req, res) => {
@@ -46,13 +46,13 @@ router.post("/register", async (req, res) => {
       profileImage: "https://api.dicebear.com/9.x/adventurer/svg?seed=Emery",
     });
 
-    await user.save();
-    const token = generateToken(user._id);
+    const userData = await user.save();
+    const token =  generateToken(userData._id);
 
     res.status(201).json({
-      token,
+      token:token||"something",
       user: {
-        _id: user._id,
+        _id: userData._id,
         email: user.email,
         username: user.username,
         profileImage: user.profileImage,
