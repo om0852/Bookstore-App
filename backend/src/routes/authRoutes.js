@@ -65,7 +65,7 @@ router.post("/register", async (req, res) => {
 });
 router.post("/login", async (req, res) => {
 try {
-  
+  console.log(req.body)
   const {email,password} = req.body;
   
   if(!email || !password){
@@ -81,7 +81,7 @@ try {
   res.status(200).json({
     token:token,
     user: {
-      _id: userData._id,
+      _id: user._id,
       email: user.email,
       username: user.username,
       profileImage: user.profileImage,
@@ -94,5 +94,7 @@ try {
 
 }
 });
+
+
 
 export default router;
